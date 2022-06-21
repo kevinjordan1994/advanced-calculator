@@ -1,15 +1,13 @@
 `use strict`;
 
-const numBtn = document.querySelectorAll(`.calc-btn`);
+const numBtns = document.querySelectorAll(`.calc-btn`);
 const numDisplay = document.querySelector(`.num-display`);
 
 class Calculator {
   firstNum;
   secondNum;
 
-  constructor() {
-    this.enterNumber();
-  }
+  constructor() {}
 
   calculate(num1, num2, operation) {
     if (isNaN(num1)) num1 = 0;
@@ -45,3 +43,13 @@ class Calculator {
 }
 
 const calculator = new Calculator();
+
+numBtns.forEach((button) =>
+  button.addEventListener(`click`, function (e) {
+    e.preventDefault();
+    let number = numDisplay.textContent;
+    console.log(+number);
+    if (+number === 0) numDisplay.textContent = "";
+    numDisplay.textContent += button.textContent;
+  })
+);
