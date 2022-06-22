@@ -1,13 +1,17 @@
 `use strict`;
 
-const numBtns = document.querySelectorAll(`.calc-btn`);
+const numBtns = document.querySelectorAll(`.num-btn`);
+const calcBtns = document.querySelectorAll(`.calc-btn`);
 const numDisplay = document.querySelector(`.num-display`);
 
 class Calculator {
-  firstNum;
-  secondNum;
+  prevNum = undefined;
+  currentNum = undefined;
+  prevOpperator = undefined;
 
-  constructor() {}
+  constructor() {
+    this.clear();
+  }
 
   calculate(num1, num2, operation) {
     if (isNaN(num1)) num1 = 0;
@@ -15,14 +19,11 @@ class Calculator {
     return operation(num1, num2);
   }
 
-  // TODO: FIND OUT WHY THIS IS NOT WORKING
-  enterNumber() {
-    if (!this.firstNum) {
-      this.firstNum = toString(1);
-    } else {
-      this.firstNum += toString(1);
-    }
-    numDisplay.textContent = this.firstNum;
+  clear() {
+    this.prevNum = undefined;
+    this.currentNum = undefined;
+    this.prevOpperator = undefined;
+    numDisplay.textContent = "0";
   }
 
   add(num1, num2) {
@@ -48,8 +49,28 @@ numBtns.forEach((button) =>
   button.addEventListener(`click`, function (e) {
     e.preventDefault();
     let number = numDisplay.textContent;
-    console.log(+number);
     if (+number === 0) numDisplay.textContent = "";
     numDisplay.textContent += button.textContent;
+  })
+);
+
+calcBtns.forEach((button) =>
+  button.addEventListener(`click`, function (e) {
+    e.preventDefault();
+    calculator.prevOpperator = this.dataset.opperator;
+    if (!calculator.prevNum) {
+      calculator.prevNum = Number(numDisplay.textContent);
+      numDisplay.textContent = "0";
+      console.log(`First number stored`);
+    } else {
+      calculator.currentNum = Number(numDisplay.textContent);
+      console.log(calculator.prevNum, calculator.currentNum);
+      numDisplay.textContent = calculator.calculate(
+        calculator.prevNum,
+        calculator.currentNum,
+        calculator.add
+      );
+    }
+    console.log(calculator.prevOpperator);
   })
 );
