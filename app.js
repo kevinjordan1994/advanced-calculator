@@ -1,81 +1,56 @@
 `use strict`;
 
-const firstNumberField = document.querySelector(`.num1`);
-const secondNumberField = document.querySelector(`.num2`);
-const resultDisplay = document.querySelector(`.result`);
-const addBtn = document.querySelector(`.add`);
-const subtractBtn = document.querySelector(`.subtract`);
-const multiplyBtn = document.querySelector(`.multiply`);
-const divideBtn = document.querySelector(`.divide`);
+const numBtns = document.querySelectorAll(`.num-btn`);
+const calcBtns = document.querySelectorAll(`.calc-btn`);
+const numDisplay = document.querySelector(`.num-display`);
 
 class Calculator {
-  constructor() {}
-
-  calculate(num1, num2, operation) {
-    if (isNaN(num1)) num1 = 0;
-    if (isNaN(num2)) num2 = 0;
-    return operation(num1, num2);
+  constructor() {
+    this.clear();
   }
 
-  add(num1, num2) {
-    return num1 + num2;
+  clear() {
+    this.prevNum = "";
+    this.currentNum = "";
+    this.opperator = undefined;
+    numDisplay.textContent = "";
   }
 
-  subtract(num1, num2) {
-    return num1 - num2;
+  addNumber(number) {
+    if (this.prevNum === "" && this.opperator) {
+      this.prevNum = this.currentNum;
+      this.currentNum = "";
+      this.updateDisplay();
+    }
+    this.currentNum += String(number);
+    this.updateDisplay();
   }
 
-  multiply(num1, num2) {
-    return num1 * num2;
+  addOpperator(opperator) {
+    this.opperator = String(opperator);
   }
 
-  divide(num1, num2) {
-    return num1 / num2;
+  calculate() {
+    //TODO: Check the opperator string and do the appropriate calculation.
   }
 
-  updateResult(result) {
-    resultDisplay.textContent = result;
+  updateDisplay() {
+    numDisplay.textContent = this.currentNum;
   }
 }
 
 const calculator = new Calculator();
 
-addBtn.addEventListener(`click`, function (e) {
-  e.preventDefault();
-  const result = calculator.calculate(
-    +firstNumberField.value,
-    +secondNumberField.value,
-    calculator.add
-  );
-  calculator.updateResult(result);
-});
+numBtns.forEach((button) =>
+  button.addEventListener(`click`, function (e) {
+    e.preventDefault();
+    calculator.addNumber(this.textContent);
+  })
+);
 
-subtractBtn.addEventListener(`click`, function (e) {
-  e.preventDefault();
-  const result = calculator.calculate(
-    +firstNumberField.value,
-    +secondNumberField.value,
-    calculator.subtract
-  );
-  calculator.updateResult(result);
-});
-
-multiplyBtn.addEventListener(`click`, function (e) {
-  e.preventDefault();
-  const result = calculator.calculate(
-    +firstNumberField.value,
-    +secondNumberField.value,
-    calculator.multiply
-  );
-  calculator.updateResult(result);
-});
-
-divideBtn.addEventListener(`click`, function (e) {
-  e.preventDefault();
-  const result = calculator.calculate(
-    +firstNumberField.value,
-    +secondNumberField.value,
-    calculator.divide
-  );
-  calculator.updateResult(result);
-});
+calcBtns.forEach((button) =>
+  button.addEventListener(`click`, function (e) {
+    e.preventDefault();
+    calculator.addOpperator(this.textContent);
+  })
+);

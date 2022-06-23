@@ -6,18 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculator</title>
     <script defer src="app.js"></script>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div class="calculator">
-      <h1 class="result">0</h1>
-      <form>
-        <input class="num1" type="text" placeholder="First Number" />
-        <input class="num2" type="text" placeholder="Second Number" />
-        <button class="add">+</button>
-        <button class="subtract">-</button>
-        <button class="multiply">*</button>
-        <button class="divide">/</button>
-      </form>
+      <h1 class="num-display"></h1>
+      <div class="buttons">
+        <button class="btn num-btn">1</button>
+        <button class="btn num-btn">2</button>
+        <button class="btn num-btn">3</button>
+        <button class="btn num-btn">4</button>
+        <button class="btn num-btn">5</button>
+        <button class="btn num-btn">6</button>
+        <button class="btn num-btn">7</button>
+        <button class="btn num-btn">8</button>
+        <button class="btn num-btn">9</button>
+        <button class="btn num-btn">0</button>
+        <button data-opperator="equals" class="btn calc-btn">=</button>
+        <button data-opperator="add" class="btn calc-btn">+</button>
+        <button data-opperator="subtract" class="btn calc-btn">-</button>
+        <button data-opperator="multiply" class="btn calc-btn">*</button>
+        <button data-opperator="divide" class="btn calc-btn">/</button>
+      </div>
     </div>
   </body>
 </html>
