@@ -5,41 +5,37 @@ const calcBtns = document.querySelectorAll(`.calc-btn`);
 const numDisplay = document.querySelector(`.num-display`);
 
 class Calculator {
-  prevNum = undefined;
-  currentNum = undefined;
-  prevOpperator = undefined;
-
   constructor() {
     this.clear();
   }
 
-  calculate(num1, num2, operation) {
-    if (isNaN(num1)) num1 = 0;
-    if (isNaN(num2)) num2 = 0;
-    return operation(num1, num2);
-  }
-
   clear() {
-    this.prevNum = undefined;
-    this.currentNum = undefined;
-    this.prevOpperator = undefined;
-    numDisplay.textContent = "0";
+    this.prevNum = "";
+    this.currentNum = "";
+    this.opperator = undefined;
+    numDisplay.textContent = "";
   }
 
-  add(num1, num2) {
-    return num1 + num2;
+  addNumber(number) {
+    if (this.prevNum === "" && this.opperator) {
+      this.prevNum = this.currentNum;
+      this.currentNum = "";
+      this.updateDisplay();
+    }
+    this.currentNum += String(number);
+    this.updateDisplay();
   }
 
-  subtract(num1, num2) {
-    return num1 - num2;
+  addOpperator(opperator) {
+    this.opperator = String(opperator);
   }
 
-  multiply(num1, num2) {
-    return num1 * num2;
+  calculate() {
+    //TODO: Check the opperator string and do the appropriate calculation.
   }
 
-  divide(num1, num2) {
-    return num1 / num2;
+  updateDisplay() {
+    numDisplay.textContent = this.currentNum;
   }
 }
 
@@ -48,29 +44,13 @@ const calculator = new Calculator();
 numBtns.forEach((button) =>
   button.addEventListener(`click`, function (e) {
     e.preventDefault();
-    let number = numDisplay.textContent;
-    if (+number === 0) numDisplay.textContent = "";
-    numDisplay.textContent += button.textContent;
+    calculator.addNumber(this.textContent);
   })
 );
 
 calcBtns.forEach((button) =>
   button.addEventListener(`click`, function (e) {
     e.preventDefault();
-    calculator.prevOpperator = this.dataset.opperator;
-    if (!calculator.prevNum) {
-      calculator.prevNum = Number(numDisplay.textContent);
-      numDisplay.textContent = "0";
-      console.log(`First number stored`);
-    } else {
-      calculator.currentNum = Number(numDisplay.textContent);
-      console.log(calculator.prevNum, calculator.currentNum);
-      numDisplay.textContent = calculator.calculate(
-        calculator.prevNum,
-        calculator.currentNum,
-        calculator.add
-      );
-    }
-    console.log(calculator.prevOpperator);
+    calculator.addOpperator(this.textContent);
   })
 );
