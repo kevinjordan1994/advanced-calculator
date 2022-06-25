@@ -24,7 +24,7 @@ class Calculator {
     }
     this.currentNum += String(number);
     this.updateDisplay();
-    // console.log(this.opperator, this.prevNum, this.currentNum);
+    console.log(this.opperator, this.prevNum, this.currentNum);
   }
 
   addOpperator(opperator) {
@@ -32,7 +32,7 @@ class Calculator {
       this.calculate();
     }
     this.opperator = String(opperator);
-    // console.log(this.opperator, this.prevNum, this.currentNum);
+    console.log(this.opperator, this.prevNum, this.currentNum);
   }
 
   calculate() {
